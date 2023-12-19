@@ -27,6 +27,20 @@ router.get("/", (req, res) => {
   }
 });
 
+router.get("/:name", (req, res) => {
+  try {
+    collection.find({name: req.params.name})
+    .toArray().then((results) => {
+        res.send(results);
+    }).catch((err) => {
+      console.log(err)
+    });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
+});
+
 router.post("/", (req, res) => {
   try {
     collection.find({name: req.body.name}).toArray().then((result) => {
@@ -47,14 +61,32 @@ router.post("/", (req, res) => {
 router.put("/", (req, res) => {
   try {
     console.log(req.body)
-    collection.find({name: req.body.name}).toArray().then((result) => {
+    collection.find({name: req.body.oldName}).toArray().then((result) => {
         if(result.length > 0) {
-          collection.updateOne({name: req.body.name},
-            {$set: { name: req.body.name,
+          collection.updateOne({name: req.body.oldName},
+            {$set: { name: req.body.newName,
                      mfd: req.body.mfd,
                      exp: req.body.exp
               }})
           res.status(200).send("Data Updated")
+        }
+        else{
+          res.status(200).send("No Data found that matches the provided details")
+        }
+    })
+  } catch (error) {
+    console.error(error);
+    return res.status(500).send("Server error");
+  }
+});
+
+router.delete("/:name", (req, res) => {
+  try {
+    console.log(req.params.name)
+    collection.find({name: req.params.name}).toArray().then((result) => {
+        if(result.length > 0) {
+          collection.deleteOne({name: req.params.name})
+          res.status(200).send("Data Deleted")
         }
         else{
           res.status(200).send("No Data found that matches the provided details")

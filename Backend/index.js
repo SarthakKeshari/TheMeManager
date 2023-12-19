@@ -4,12 +4,15 @@ const medicine = require("./api/medicines");
 const book = require("./api/books");
 const finnace = require("./api/finance");
 const wardrobe = require("./api/wardrobe");
+const cors = require("cors")
+
 // const db = require("./dbConnection");
 require('dotenv').config();
 
 app.use(express.json({ extended: false }));
 // console.log(db.collection("Medicines").insertOne({ item: "tea", qty: 10 } ))
 
+app.use(cors({ origin: true, credentials: true }));
 app.use("/api/medicine", medicine);
 app.use("/api/book", book);
 // app.use("/api/finance", finnace);
