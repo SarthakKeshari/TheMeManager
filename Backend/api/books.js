@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../dbConnection")
-const collection = db.collection("Medicines")
+const collection = db.collection("Books")
 
 router.get("/", (req, res) => {
   try {
@@ -29,7 +29,7 @@ router.get("/", (req, res) => {
 
 router.post("/", (req, res) => {
   try {
-    collection.find({name: req.body.name}).toArray().then((result) => {
+    collection.find({bookname: req.body.bookname}).toArray().then((result) => {
         if(result.length > 0) {
           res.status(200).send("Kindly Update. Data already exists")
         }
@@ -47,12 +47,12 @@ router.post("/", (req, res) => {
 router.put("/", (req, res) => {
   try {
     console.log(req.body)
-    collection.find({name: req.body.name}).toArray().then((result) => {
+    collection.find({bookname: req.body.bookname}).toArray().then((result) => {
         if(result.length > 0) {
           collection.updateOne({name: req.body.name},
-            {$set: { name: req.body.name,
-                     mfd: req.body.mfd,
-                     exp: req.body.exp
+            {$set: { bookname: req.body.bookname,
+                     authorname: req.body.authorname,
+                     readby: req.body.readby,
               }})
           res.status(200).send("Data Updated")
         }
