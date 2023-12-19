@@ -25,7 +25,7 @@ function UpdateMedicine(props) {
     }
 
     const getByNameCall = (e) => {
-        axios.get(`http://localhost:8080/api/medicine/${e.currentTarget.value}`)
+        axios.get(`https://the-me-manager-backend.vercel.app/api/medicine/${e.currentTarget.value}`)
         .then(function (response) {
             console.log(response.data)
             setOldMedName(response.data[0].name);

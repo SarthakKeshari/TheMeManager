@@ -38,7 +38,7 @@ function Details(props) {
     }
 
     const getCall = () => {
-        axios.get(`http://localhost:8080/api/medicine`)
+        axios.get(`https://the-me-manager-backend.vercel.app/api/medicine`)
         .then(function (response) {
             console.log(response.data)
             setTableData(response.data);
@@ -46,7 +46,7 @@ function Details(props) {
     }
 
     const getByNameCall = (e) => {
-        axios.get(`http://localhost:8080/api/medicine/${e.currentTarget.value}`)
+        axios.get(`https://the-me-manager-backend.vercel.app/api/medicine/${e.currentTarget.value}`)
         .then(function (response) {
             console.log(response.data)
             setUpdateEntry(response.data[0]);
@@ -54,7 +54,7 @@ function Details(props) {
     }
 
     const addCall = (name, mfg, exp) => {
-        axios.post(`http://localhost:8080/api/medicine`, {
+        axios.post(`https://the-me-manager-backend.vercel.app/api/medicine`, {
             name: name,
             mfg: mfg,
             exp: exp
@@ -69,7 +69,7 @@ function Details(props) {
     }
 
     const deleteCall = (e) => {
-        axios.delete(`http://localhost:8080/api/medicine/${e.currentTarget.value}`)
+        axios.delete(`https://the-me-manager-backend.vercel.app/api/medicine/${e.currentTarget.value}`)
         .then(function (response) {
             console.log(response.data)
             getCall();

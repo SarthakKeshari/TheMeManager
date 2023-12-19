@@ -18,7 +18,7 @@ function AddMedicine({change}) {
     }
 
     const addCall = (name, mfg, exp) => {
-        axios.post(`http://localhost:8080/api/medicine`, {
+        axios.post(`https://the-me-manager-backend.vercel.app/api/medicine`, {
             name: name,
             mfg: mfg,
             exp: exp
