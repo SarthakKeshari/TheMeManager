@@ -44,6 +44,12 @@ function UpdateMedicine(props) {
         }).then(function (response) {
             console.log(response.data)
             props.change()
+            props.setAlertDetails({
+                isVisible: true,
+                alertTitle: "Success!",
+                alertStatus: "success",
+                alertDescription: `Medicine detail(s) for ${newMedName} has been updated`
+            })
         });
     }
 

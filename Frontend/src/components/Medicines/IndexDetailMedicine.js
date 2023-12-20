@@ -1,21 +1,29 @@
-import { DeleteIcon } from "@chakra-ui/icons";
-import { Button, Container, Grid, GridItem, Heading, Progress, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
+import { Container, Grid, GridItem, Heading, Progress, Table, TableCaption, TableContainer, Tbody, Td, Th, Thead, Tr } from "@chakra-ui/react";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import AddMedicine from "./Medicines/AddMedicine";
-import UpdateMedicine from "./Medicines/UpdateMedicine";
-import "./Medicines/Medicine.css";
-import SearchBar from "./SearchBar";
-import DeleteMedicine from "./Medicines/DeleteMedicine";
+import AddMedicine from "./AddMedicine";
+import UpdateMedicine from "./UpdateMedicine";
+import "./Medicine.css";
+import SearchBar from "../SearchBar";
+import DeleteMedicine from "./DeleteMedicine";
+import RaiseAlert from "../RaiseAlert";
 
-function Details() {
+function IndexDetailMedicine() {
     const {search} = useLocation();
     const searchParams = React.useMemo(() => new URLSearchParams(search), [search]);
     const filename = searchParams.get("detailOf")
 
     const [refresh, setRefresh] = useState(true)
     const [resetSearch, setResetSearch] = useState(false)
+    const [alertDetail, setAlertDetail] = useState(
+        {
+            isVisible: false,
+            alertTitle: "",
+            alertStatus: "",
+            alertDescription: ""
+        }
+    )
     const [tableData, setTableData] = useState([])
     const [originalTableData, setOriginalTableData] = useState([])
     const [searchValue, setSearchValue] = useState()
@@ -62,7 +70,8 @@ function Details() {
 
     return (
     <>
-        <Container maxW='container.lg' p={5}>  
+        {alertDetail.isVisible?<RaiseAlert alertDetails={alertDetail} />:<></>}
+        <Container maxW='container.lg' p={5}> 
             <Heading display="flex" flexDirection={"column"} alignItems="center" mb={2}>Medicines</Heading>     
             <hr/> 
             <Grid templateColumns='repeat(5, 1fr)' gap={4} mt={4} mb={2}>
@@ -70,7 +79,7 @@ function Details() {
                     <SearchBar incomingSearchValue={setSearchValue} resetSearchTrigger={setResetSearch} resetSearch={resetSearch}/>
                 </GridItem>
                 <GridItem>
-                    <AddMedicine change={alterRefresh}/>
+                    <AddMedicine change={alterRefresh} setAlertDetails={setAlertDetail}/>
                 </GridItem>
             </Grid> 
             <TableContainer border='1px' borderColor='gray.200' borderRadius='10'>
@@ -94,8 +103,8 @@ function Details() {
                                     <Td isNumeric>{row.mfg}</Td>
                                     <Td isNumeric>{row.exp}</Td>
                                     <Td isNumeric>
-                                        <UpdateMedicine value={row.name} change={alterRefresh}/>
-                                        <DeleteMedicine value={row.name} change={alterRefresh}/>
+                                        <UpdateMedicine value={row.name} change={alterRefresh} setAlertDetails={setAlertDetail}/>
+                                        <DeleteMedicine value={row.name} change={alterRefresh} setAlertDetails={setAlertDetail}/>
                                     </Td>
                                 </Tr>
                             )
@@ -110,4 +119,4 @@ function Details() {
   );
 }
 
-export default Details;
+export default IndexDetailMedicine;

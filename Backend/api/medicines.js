@@ -7,8 +7,9 @@ router.get("/", (req, res) => {
   try {
     collection.find()
     .toArray().then((results) => {
-        res.send(results);
+        res.status(200).send(results);
     }).catch((err) => {
+      res.status(500).send("Loading data failed");
       console.log(err)
     });
 
@@ -31,13 +32,14 @@ router.get("/:name", (req, res) => {
   try {
     collection.find({name: req.params.name})
     .toArray().then((results) => {
-        res.send(results);
+        res.status(200).send(results);
     }).catch((err) => {
+      res.status(500).send("Loading data failed");
       console.log(err)
     });
   } catch (error) {
     console.error(error);
-    return res.status(500).send("Server error");
+    res.status(500).send("Server error");
   }
 });
 
@@ -45,7 +47,7 @@ router.post("/", (req, res) => {
   try {
     collection.find({name: req.body.name}).toArray().then((result) => {
         if(result.length > 0) {
-          res.status(200).send("Kindly Update. Data already exists")
+          res.status(201).send("Kindly Update. Data already exists")
         }
         else{
           collection.insertOne(req.body)
@@ -71,7 +73,7 @@ router.put("/", (req, res) => {
           res.status(200).send("Data Updated")
         }
         else{
-          res.status(200).send("No Data found that matches the provided details")
+          res.status(201).send("No Data found that matches the provided details")
         }
     })
   } catch (error) {
@@ -86,10 +88,10 @@ router.delete("/:name", (req, res) => {
     collection.find({name: req.params.name}).toArray().then((result) => {
         if(result.length > 0) {
           collection.deleteOne({name: req.params.name})
-          res.status(200).send("Data Deleted")
+          res.status(200).send(req.params.name+" has been removed from your medicine list")
         }
         else{
-          res.status(200).send("No Data found that matches the provided details")
+          res.status(201).send("No Data found that matches the provided details")
         }
     })
   } catch (error) {

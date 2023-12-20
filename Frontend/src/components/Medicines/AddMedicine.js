@@ -3,7 +3,7 @@ import { Box, Button, Input, Modal, ModalBody, ModalCloseButton, ModalContent, M
 import axios from "axios";
 import React from "react";
 
-function AddMedicine({change}) {
+function AddMedicine({change, setAlertDetails}) {
     let nameInput = React.createRef();
     let mfgInput = React.createRef();
     let expInput = React.createRef();
@@ -25,6 +25,12 @@ function AddMedicine({change}) {
         }).then(function (response) {
             console.log(response.data)
             change()
+            setAlertDetails({
+                isVisible: true,
+                alertTitle: "Success!",
+                alertStatus: "success",
+                alertDescription: `${name} has been added to your medicine list`
+            })
         });
     }  
 

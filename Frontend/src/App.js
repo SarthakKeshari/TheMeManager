@@ -1,6 +1,7 @@
-import Details from './components/Details';
+
 import Home from './components/Home';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import IndexDetailMedicine from './components/Medicines/IndexDetailMedicine';
 
 function App() {
   return (
@@ -8,7 +9,7 @@ function App() {
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
-            <Route path="details" element={<Details />} />
+            <Route path="details" element={<IndexDetailMedicine />} />
           </Route>
         </Routes>
       </BrowserRouter>
