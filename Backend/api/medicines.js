@@ -60,12 +60,12 @@ router.post("/", (req, res) => {
 
 router.put("/", (req, res) => {
   try {
-    console.log(req.body)
+    // console.log(req.body)
     collection.find({name: req.body.oldName}).toArray().then((result) => {
         if(result.length > 0) {
           collection.updateOne({name: req.body.oldName},
             {$set: { name: req.body.newName,
-                     mfd: req.body.mfd,
+                     mfg: req.body.mfg,
                      exp: req.body.exp
               }})
           res.status(200).send("Data Updated")
@@ -82,7 +82,7 @@ router.put("/", (req, res) => {
 
 router.delete("/:name", (req, res) => {
   try {
-    console.log(req.params.name)
+    // console.log(req.params.name)
     collection.find({name: req.params.name}).toArray().then((result) => {
         if(result.length > 0) {
           collection.deleteOne({name: req.params.name})
