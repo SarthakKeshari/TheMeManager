@@ -53,7 +53,7 @@ function IndexDetailMedicine() {
         const result = originalTableData.filter(
             (e) => {
                 const boolArray = Object.entries(e).map(([k,v]) => {
-                    if (k!="_id" && v?.includes(searchValue)) {
+                    if (k!="_id" && v?.toLowerCase().includes(searchValue.toLowerCase())) {
                         return true;
                     }
                 })
