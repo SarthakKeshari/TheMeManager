@@ -23,14 +23,32 @@ function AddMedicine({change, setAlertDetails}) {
             mfg: mfg,
             exp: exp
         }).then(function (response) {
-            console.log(response.data)
-            change()
-            setAlertDetails({
-                isVisible: true,
-                alertTitle: "Success!",
-                alertStatus: "success",
-                alertDescription: `${name} has been added to your medicine list`
-            })
+            // console.log(response.data)
+            if(response.status == 200) {
+                change()
+                setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Success!",
+                    alertStatus: "success",
+                    alertDescription: response.data
+                })
+            }
+            else if(response.status == 201) {
+                setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Warning!",
+                    alertStatus: "warning",
+                    alertDescription: response.data
+                })
+            }
+            else {
+                setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Error!",
+                    alertStatus: "error",
+                    alertDescription: response.data
+                })
+            }
         });
     }  
 

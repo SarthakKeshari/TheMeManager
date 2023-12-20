@@ -7,36 +7,45 @@ function DeleteMedicine(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
 
     const deleteCall = (e) => {
-        const medName = e.currentTarget.value
-        axios.delete(`https://the-me-manager-backend.vercel.app/api/medicine/${e.currentTarget.value}`)
-        .then(function (response) {
-            // console.log(response.data)
-            if(response.status == 200) {
-                props.change()
-                props.setAlertDetails({
-                    isVisible: true,
-                    alertTitle: "Success!",
-                    alertStatus: "success",
-                    alertDescription: response.data
-                })
-            }
-            else if(response.status == 201) {
-                props.setAlertDetails({
-                    isVisible: true,
-                    alertTitle: "Warning!",
-                    alertStatus: "warning",
-                    alertDescription: response.data
-                })
-            }
-            else {
-                props.setAlertDetails({
-                    isVisible: true,
-                    alertTitle: "Error!",
-                    alertStatus: "error",
-                    alertDescription: response.data
-                })
-            }
-        });
+        try {
+            axios.delete(`https://the-me-manager-backend.vercel.app/api/medicine/${e.currentTarget.value}`)
+            .then(function (response) {
+                // console.log(response.data)
+                if(response.status == 200) {
+                    props.change()
+                    props.setAlertDetails({
+                        isVisible: true,
+                        alertTitle: "Success!",
+                        alertStatus: "success",
+                        alertDescription: response.data
+                    })
+                }
+                else if(response.status == 201) {
+                    props.setAlertDetails({
+                        isVisible: true,
+                        alertTitle: "Warning!",
+                        alertStatus: "warning",
+                        alertDescription: response.data
+                    })
+                }
+                else {
+                    props.setAlertDetails({
+                        isVisible: true,
+                        alertTitle: "Error!",
+                        alertStatus: "error",
+                        alertDescription: response.data
+                    })
+                }
+            });
+        }
+        catch(e) {
+            props.setAlertDetails({
+                isVisible: true,
+                alertTitle: "Error!",
+                alertStatus: "error",
+                alertDescription: "Oops! Something went wrong. Its not you its us."
+            })
+        }
     }
 
     return (

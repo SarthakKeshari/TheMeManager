@@ -47,11 +47,11 @@ router.post("/", (req, res) => {
   try {
     collection.find({name: req.body.name}).toArray().then((result) => {
         if(result.length > 0) {
-          res.status(201).send("Kindly Update. Data already exists")
+          res.status(201).send("Kindly Update. Since, " + req.body.name + " already exists in your medicine list")
         }
         else{
           collection.insertOne(req.body)
-          res.status(200).send("Data Inserted")
+          res.status(200).send(req.body.name + " has been added to your medicine list")
         }
     })
   } catch (error) {
@@ -70,7 +70,7 @@ router.put("/", (req, res) => {
                      mfg: req.body.mfg,
                      exp: req.body.exp
               }})
-          res.status(200).send("Data Updated")
+          res.status(200).send("Medicine detail(s) for " + req.body.newName + " has been updated")
         }
         else{
           res.status(201).send("No Data found that matches the provided details")

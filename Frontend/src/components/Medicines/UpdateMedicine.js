@@ -36,20 +36,38 @@ function UpdateMedicine(props) {
     }
 
     const updateCall = () => {
-        axios.put(`http://localhost:8080/api/medicine`, {
+        axios.put(`https://the-me-manager-backend.vercel.app/api/medicine`, {
             oldName: oldMedName,
             newName: newMedName,
             mfg: mfg,
             exp: exp
         }).then(function (response) {
-            console.log(response.data)
-            props.change()
-            props.setAlertDetails({
-                isVisible: true,
-                alertTitle: "Success!",
-                alertStatus: "success",
-                alertDescription: `Medicine detail(s) for ${newMedName} has been updated`
-            })
+            // console.log(response.data)
+            if(response.status == 200) {
+                props.change()
+                props.setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Success!",
+                    alertStatus: "success",
+                    alertDescription: response.data
+                })
+            }
+            else if(response.status == 201) {
+                props.setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Warning!",
+                    alertStatus: "warning",
+                    alertDescription: response.data
+                })
+            }
+            else {
+                props.setAlertDetails({
+                    isVisible: true,
+                    alertTitle: "Error!",
+                    alertStatus: "error",
+                    alertDescription: response.data
+                })
+            }
         });
     }
 
